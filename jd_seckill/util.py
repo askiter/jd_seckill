@@ -1,15 +1,19 @@
+#!/usr/bin/env python
+# -*- encoding=utf8 -*-
+
 import json
 import random
 import requests
 import os
 import time
 import smtplib
+
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
-from config import global_config
-from jd_logger import logger
+from .config import global_config
+from .jd_logger import logger
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
@@ -84,13 +88,13 @@ def wait_some_time():
 
 def send_wechat(message):
     """推送信息到微信"""
-    url = 'http://sc.ftqq.com/{}.send'.format(global_config.getRaw('messenger', 'sckey'))
+    url = 'http://sc.ftqq.com/{}.send'.format(global_config.getRaw('messenger', 'server_chan_sckey'))
     payload = {
         "text": '抢购结果',
         "desp": message
     }
     headers = {
-        'User-Agent': global_config.getRaw('config', 'DEFAULT_USER_AGENT')
+        'User-Agent': global_config.getRaw('config', 'default_user_agent')
     }
     requests.get(url, params=payload, headers=headers)
 
@@ -131,8 +135,8 @@ def add_bg_for_qr(qr_path):
         result = Image.new(bg.mode, (w * 2, h * 2))
         result.paste(bg, box=(0, 0))
         result.paste(qr, box=(int(w / 2), int(h / 2)))
-        result.save("qr_code.png")
-        return os.path.abspath("qr_code.png")
+        result.save(qr_path)
+        return os.path.abspath(qr_path)
     except ImportError:
         logger.info("加载PIL失败，不对登录二维码进行优化，请查看requirements.txt")
         return qr_path

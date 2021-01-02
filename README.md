@@ -90,10 +90,10 @@
 > 随便找一个商品下单，然后进入结算页面，打开浏览器的调试窗口，切换到控制台Tab页，在控制台中输入变量`_JdTdudfp`，即可从输出的Json中获取`eid`和`fp`。  
 > 不会的话参考原作者的issue https://github.com/zhou-xiaojun/jd_mask/issues/22
 
-(2)`sku_id`,`DEFAULT_USER_AGENT` 
+(2)`sku_id`,`default_user_agent` 
 > `sku_id`已经按照茅台的填好。
 > `cookies_string` 现在已经不需要填写了
-> `DEFAULT_USER_AGENT` 可以用默认的。谷歌浏览器也可以浏览器地址栏中输入about:version 查看`USER_AGENT`替换
+> `default_user_agent` 可以用默认的。谷歌浏览器也可以浏览器地址栏中输入about:version 查看`USER_AGENT`替换
 
 (3)配置一下时间
 > 现在不强制要求同步最新时间了，程序会自动同步京东时间
@@ -132,12 +132,12 @@ $ zbarimg qr_code.png > qrcode.txt && qrencode -r qrcode.txt -o - -t UTF8 # 解�
 
 ```bash
 $ cd dockerfile
-$ sudo docker build jd-seckill:latest .
+$ sudo docker build -t jd-seckill:latest .
 ```
 
 #### 运行容器
 
-1. 修改配置文件 `compose/common/configs/config.ini `
+1. 修改配置文件 `compose/docker-compose.yml`  
 
 2. 使用 Docker compose 运行
 
